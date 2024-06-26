@@ -21,11 +21,11 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
     #[ORM\Column(length: 180, unique: true)]
     private ?string $email = null;
 
-    /**
-     * @var list<string> The user roles
-     */
-    #[ORM\Column]
-    private array $roles = [];
+    // /**
+    //  * @var list<string> The user roles
+    //  */
+    // #[ORM\Column]
+    // private array $roles = [];
 
     /**
      * @var string The hashed password
@@ -38,6 +38,9 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
 
     #[ORM\Column(length: 50, nullable: true)]
     private ?string $lastname = null;
+
+    #[ORM\Column(length: 255)]
+    private ?string $profil = null;
 
     public function getId(): ?string
     {
@@ -66,28 +69,29 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
         return (string) $this->email;
     }
 
-    /**
-     * @see UserInterface
-     * @return list<string>
-     */
-    public function getRoles(): array
-    {
-        $roles = $this->roles;
-        // guarantee every user at least has ROLE_USER
-        $roles[] = 'ROLE_USER';
 
-        return array_unique($roles);
-    }
+    // /**
+    //  * @see UserInterface
+    //  * @return list<string>
+    //  */
+    // public function getRoles(): array
+    // {
+    //     $roles = $this->roles;
+    //     // guarantee every user at least has ROLE_USER
+    //     $roles[] = 'ROLE_USER';
 
-    /**
-     * @param list<string> $roles
-     */
-    public function setRoles(array $roles): static
-    {
-        $this->roles = $roles;
+    //     return array_unique($roles);
+    // }
 
-        return $this;
-    }
+    // /**
+    //  * @param list<string> $roles
+    //  */
+    // public function setRoles(array $roles): static
+    // {
+    //     $this->roles = $roles;
+
+    //     return $this;
+    // }
 
 
     /**
@@ -134,6 +138,23 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
     public function setLastname(?string $lastname): static
     {
         $this->lastname = $lastname;
+
+        return $this;
+    }
+
+    public function getRoles(): array
+    {
+        return ['ROLE_USER',$this->profil];
+    }
+
+    public function getProfil(): ?string
+    {
+        return $this->profil;
+    }
+
+    public function setProfil(string $profil): static
+    {
+        $this->profil= $profil;
 
         return $this;
     }

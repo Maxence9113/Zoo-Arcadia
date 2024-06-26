@@ -45,13 +45,13 @@ class UserCrudController extends AbstractCrudController
                     'mapped' => false,
                     ])
                 ->onlyOnForms(),
-            ChoiceField::new('roles')
+            ChoiceField::new('profil')
                 ->setLabel('Rôle')
                 ->setChoices([
                     'Vétérinaire' => 'ROLE_VETERINARY',
                     'Employé' => 'ROLE_EMPLOYEE',
                 ])
-                ->allowMultipleChoices()
+                // ->allowMultipleChoices()
                 // ->renderExpanded()
         ];
 
