@@ -3,4 +3,12 @@
 
 {% block body %}
     <h1>Compte Utilisateur</h1>
+
+    {% if user %}
+        <p>Nom: {{ user.lastname }}</p> <!-- Remplacez 'lastname' par le nom de la propriété appropriée -->
+        <p>Prénom: {{ user.firstname }}</p> <!-- Remplacez 'firstname' par le nom de la propriété appropriée -->
+        <p>Email: {{ user.email }}</p>
+    {% else %}
+        <p>Utilisateur non connecté.</p>
+    {% endif %}
 {% endblock %}
