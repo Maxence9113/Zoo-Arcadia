@@ -5,10 +5,13 @@
     <h1>Compte Utilisateur</h1>
 
     {% if user %}
+    <h2>Infomations</h2>
         <p>Nom: {{ user.lastname }}</p> <!-- Remplacez 'lastname' par le nom de la propriété appropriée -->
         <p>Prénom: {{ user.firstname }}</p> <!-- Remplacez 'firstname' par le nom de la propriété appropriée -->
         <p>Email: {{ user.email }}</p>
+    <h2>Modification du mot de passe</h2>
     {% else %}
         <p>Utilisateur non connecté.</p>
     {% endif %}
+        {{ form(modifyPwd) }}
 {% endblock %}
