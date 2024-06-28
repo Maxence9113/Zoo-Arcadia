@@ -48,6 +48,7 @@ class UserCrudController extends AbstractCrudController
             ChoiceField::new('profil')
                 ->setLabel('Rôle')
                 ->setChoices([
+                    'Administrateur' => 'ROLE_ADMIN',
                     'Vétérinaire' => 'ROLE_VETERINARY',
                     'Employé' => 'ROLE_EMPLOYEE',
                 ])
