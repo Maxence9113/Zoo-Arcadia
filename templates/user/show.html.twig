@@ -1,0 +1,34 @@
+{% extends '/admin/index.html.twig' %}
+
+{% block title %}User{% endblock %}
+
+{% block content %}
+    <h1>User</h1>
+
+    <table class="table">
+        <tbody>
+            <tr>
+            <tr>
+                <th>Lastname</th>
+                <td>{{ user.lastname }}</td>
+            </tr>
+                <th>Firstname</th>
+                <td>{{ user.firstname }}</td>
+            </tr>
+            <tr>
+                <th>Email</th>
+                <td>{{ user.email }}</td>
+            </tr>
+            <tr>
+                <th>Role</th>
+                <td>{{ user.profil }}</td>
+            </tr>
+        </tbody>
+    </table>
+
+    <a href="{{ path('app_user_index') }}">Retour</a>
+
+    <a href="{{ path('app_user_edit', {'id': user.id}) }}">Modifier</a>
+
+    {{ include('user/_delete_form.html.twig') }}
+{% endblock %}

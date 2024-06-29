@@ -2,6 +2,13 @@
 
 
 {% block body %}
-    <h1>Dashboard</h1>
+
+	{% block sidebar %}
+		{% include "_partials/_admin_sidebar.html.twig" %}
+	{% endblock %}
+
+    {% block content %}
+        <h2>Content</h2>
+    {% endblock %}
 
 {% endblock %}
