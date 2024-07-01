@@ -25,7 +25,7 @@ class Race
     #[ORM\Column(length: 50)]
     private ?string $habitat = null;
 
-    #[ORM\Column(length: 255)]
+    #[ORM\Column(length: 255, nullable: true)]
     private ?string $illustration = null;
 
     #[ORM\Column(length: 255)]
