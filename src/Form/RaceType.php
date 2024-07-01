@@ -6,6 +6,7 @@ use App\Entity\Race;
 use Symfony\Component\Form\AbstractType;
 use Symfony\Component\Form\Extension\Core\Type\ChoiceType;
 use Symfony\Component\Form\Extension\Core\Type\FileType;
+use Symfony\Component\Form\Extension\Core\Type\SubmitType;
 use Symfony\Component\Form\Extension\Core\Type\TextareaType;
 use Symfony\Component\Form\Extension\Core\Type\TextType;
 use Symfony\Component\Form\FormBuilderInterface;
@@ -40,10 +41,9 @@ class RaceType extends AbstractType
                     ],
                     'multiple' => false,
                     'label' => 'Habitat',
-                ]
-            )
+                ])
 
-            ->add('illustration', FileType::class, [
+            ->add('illustrationRace', FileType::class, [
                 'label' => 'Illustration (jpeg, webp)',
                 'mapped' => false,
                 'required'=> false,
@@ -63,6 +63,11 @@ class RaceType extends AbstractType
                 // 'attr' => [
                 //     'placeholder' => 'Doe',
                 // ]
+            ])
+            ->add('Editer', SubmitType::class, [
+                'attr' => [
+                    'class' => 'btn btn-primary',
+                ]
             ])
         ;
     }
