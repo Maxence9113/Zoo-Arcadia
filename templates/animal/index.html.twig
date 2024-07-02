@@ -10,7 +10,9 @@
             <tr>
                 <th>Id</th>
                 <th>Name</th>
-                <th>actions</th>
+                <th>Race</th>
+                <th>Habitat</th>
+                <th>Actions</th>
             </tr>
         </thead>
         <tbody>
@@ -18,10 +20,12 @@
             <tr>
                 <td>{{ animal.id }}</td>
                 <td>{{ animal.name }}</td>
+                <td>{{ animal.race.name }}</td>
+                <td>{{ animal.race.habitat|habitat_pretty }}</td>
                 <td>
                     <a href="{{ path('app_animal_show', {'id': animal.id}) }}">show</a>
                     <a href="{{ path('app_animal_edit', {'id': animal.id}) }}">edit</a>
-                    {{ include('user/_delete_form.html.twig') }}
+                    {{ include('animal/_delete_form.html.twig') }}
                 </td>
             </tr>
         {% else %}
