@@ -40,6 +40,11 @@ class AnimalRepository extends ServiceEntityRepository
                 ->setParameter('race', $search->race);
         }
 
+        if (!empty($search->habitat)) {
+            $query = $query
+                ->andWhere('r.habitat IN (:habitat)')
+                ->setParameter('habitat', $search->habitat);
+        }
 
 
         return $query->getQuery()->getResult();
