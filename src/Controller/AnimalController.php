@@ -2,8 +2,10 @@
 
 namespace App\Controller;
 
+use App\Data\SearchData;
 use App\Entity\Animal;
 use App\Form\AnimalType;
+use App\Form\SearchType;
 use App\Repository\AnimalRepository;
 use Doctrine\ORM\EntityManagerInterface;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
@@ -15,10 +17,15 @@ use Symfony\Component\Routing\Attribute\Route;
 class AnimalController extends AbstractController
 {
     #[Route('/', name: 'app_animal_index', methods: ['GET'])]
-    public function index(AnimalRepository $animalRepository): Response
+    public function index(AnimalRepository $animalRepository, Request $request): Response
     {
+        $data = new SearchData();
+        $form = $this->createForm(SearchType::class, $data);
+        $form->handleRequest($request);
+        $animals = $animalRepository->findSearch($data);
         return $this->render('animal/index.html.twig', [
-            'animals' => $animalRepository->findAll(),
+            'animals' => $animals,
+            'searchForm' => $form->createView(),
         ]);
     }
 
