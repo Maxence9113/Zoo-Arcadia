@@ -1,0 +1,37 @@
+{% extends '/admin/index.html.twig' %}
+
+{% block title %}PictureAnimal index{% endblock %}
+
+{% block content %}
+    <h1>PictureAnimal index</h1>
+
+    <table class="table">
+        <thead>
+            <tr>
+                <th>Id</th>
+                <th>Picture</th>
+                <th>DescriptionAlt</th>
+                <th>actions</th>
+            </tr>
+        </thead>
+        <tbody>
+        {% for picture_animal in picture_animals %}
+            <tr>
+                <td>{{ picture_animal.id }}</td>
+                <td>{{ picture_animal.picture }}</td>
+                <td>{{ picture_animal.descriptionAlt }}</td>
+                <td>
+                    <a href="{{ path('app_picture_animal_show', {'id': picture_animal.id}) }}">show</a>
+                    <a href="{{ path('app_picture_animal_edit', {'id': picture_animal.id}) }}">edit</a>
+                </td>
+            </tr>
+        {% else %}
+            <tr>
+                <td colspan="4">no records found</td>
+            </tr>
+        {% endfor %}
+        </tbody>
+    </table>
+
+    <a href="{{ path('app_picture_animal_new') }}">Create new</a>
+{% endblock %}
