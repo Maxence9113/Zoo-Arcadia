@@ -23,6 +23,8 @@
                 <td>
                     <a href="{{ path('app_picture_animal_show', {'id': picture_animal.id}) }}">show</a>
                     <a href="{{ path('app_picture_animal_edit', {'id': picture_animal.id}) }}">edit</a>
+                    {{ include('picture_animal/_delete_form.html.twig') }}
+
                 </td>
             </tr>
         {% else %}
