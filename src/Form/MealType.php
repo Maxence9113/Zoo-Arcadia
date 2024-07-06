@@ -24,11 +24,11 @@ class MealType extends AbstractType
             ])
             ->add('annimal', EntityType::class, [
                 'class' => Animal::class,
-                'choice_label' => 'id',
+                'choice_label' => 'name',
             ])
             ->add('employee', EntityType::class, [
                 'class' => User::class,
-                'choice_label' => 'id',
+                'choice_label' => 'name',
             ])
         ;
     }
