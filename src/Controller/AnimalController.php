@@ -5,8 +5,8 @@ namespace App\Controller;
 use App\Data\SearchData;
 use App\Entity\Animal;
 use App\Entity\AnimalPicture;
+use App\Form\AnimalSearchType;
 use App\Form\AnimalType;
-use App\Form\SearchType;
 use App\Repository\AnimalRepository;
 use Doctrine\ORM\EntityManagerInterface;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
@@ -24,7 +24,7 @@ class AnimalController extends AbstractController
     public function index(AnimalRepository $animalRepository, Request $request): Response
     {
         $data = new SearchData();
-        $form = $this->createForm(SearchType::class, $data);
+        $form = $this->createForm(AnimalSearchType::class, $data);
         $form->handleRequest($request);
         $animals = $animalRepository->findSearch($data);
         return $this->render('animal/index.html.twig', [
