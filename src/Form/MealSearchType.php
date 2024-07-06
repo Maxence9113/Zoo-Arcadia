@@ -3,9 +3,10 @@
 namespace App\Form;
 
 use App\Data\SearchData;
+use App\Entity\Animal;
+use App\Entity\User;
 use Symfony\Bridge\Doctrine\Form\Type\EntityType;
 use Symfony\Component\Form\AbstractType;
-use Symfony\Component\Form\Extension\Core\Type\ChoiceType;
 use Symfony\Component\Form\Extension\Core\Type\TextType;
 use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\OptionsResolver\OptionsResolver;
@@ -23,25 +24,21 @@ class MealSearchType extends AbstractType
                     'placeholder' => 'Rechercher'
                 ]
             ])
-            ->add('race', EntityType::class, [
+            ->add('employee', EntityType::class, [
                 'label' => false,
                 'required' => false,
-                'class' => Race::class,
+                'class' => User::class,
                 'expanded' => true,
                 'multiple' => true
             ])
-            ->add('habitat', ChoiceType::class, [
+            ->add('animal', EntityType::class, [
                 'label' => false,
                 'required' => false,
-                'choices' => [
-                    'Savanne' => 'HABITAT_SAVANNAH',
-                    'Jungle' => 'HABITAT_JUNGLE',
-                    'Marais' => 'HABITAT_SWAMP',
-                    // Ajoutez d'autres habitats selon vos besoins
-                ],
+                'class' => Animal::class,
                 'expanded' => true,
                 'multiple' => true
             ])
+
             ;
     }
 

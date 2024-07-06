@@ -22,7 +22,7 @@ class MealType extends AbstractType
             ->add('time', null, [
                 'widget' => 'single_text',
             ])
-            ->add('annimal', EntityType::class, [
+            ->add('animal', EntityType::class, [
                 'class' => Animal::class,
                 'choice_label' => 'name',
             ])

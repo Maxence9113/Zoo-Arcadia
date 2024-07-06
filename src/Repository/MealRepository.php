@@ -2,6 +2,7 @@
 
 namespace App\Repository;
 
+use App\Data\SearchData;
 use App\Entity\Meal;
 use Doctrine\Bundle\DoctrineBundle\Repository\ServiceEntityRepository;
 use Doctrine\Persistence\ManagerRegistry;
@@ -15,6 +16,41 @@ class MealRepository extends ServiceEntityRepository
     {
         parent::__construct($registry, Meal::class);
     }
+
+        /**
+     * Récupère les animaux en base de données
+     * @return Meal[]
+     */
+    public function findSearch(SearchData $search): array
+    {
+        $query = $this
+            ->createQueryBuilder('m')
+            ->join('m.animal', 'a')
+            ->join('m.employee', 'u')
+            ->select('m', 'a', 'u');
+
+        if (!empty($search->q)) {
+            $query = $query
+                ->andWhere('r.name LIKE :q OR a.name LIKE :q')
+                ->setParameter('q', "%{$search->q}%");
+        }
+
+        if (!empty($search->employee)) {
+            $query = $query
+                ->andWhere('u.username IN (:employee)')
+                ->setParameter('employee', $search->employee);
+        }
+
+        if (!empty($search->animal)) {
+            $query = $query
+                ->andWhere('a.name IN (:animal)')
+                ->setParameter('animal', $search->animal);
+        }
+
+
+        return $query->getQuery()->getResult();
+    }
+
 
 //    /**
 //     * @return Meal[] Returns an array of Meal objects

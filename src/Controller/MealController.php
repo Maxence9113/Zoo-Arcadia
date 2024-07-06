@@ -2,7 +2,9 @@
 
 namespace App\Controller;
 
+use App\Data\SearchData;
 use App\Entity\Meal;
+use App\Form\MealSearchType;
 use App\Form\MealType;
 use App\Repository\MealRepository;
 use Doctrine\ORM\EntityManagerInterface;
@@ -15,8 +17,17 @@ use Symfony\Component\Routing\Attribute\Route;
 class MealController extends AbstractController
 {
     #[Route('/', name: 'app_meal_index', methods: ['GET'])]
-    public function index(MealRepository $mealRepository): Response
+    public function index(MealRepository $mealRepository, Request $request): Response
     {
+        $data = new SearchData();
+        $form = $this->createForm(MealSearchType::class, $data);
+        $form->handleRequest($request);
+        $meal = $mealRepository->findSearch($data);
+        return $this->render('meal/index.html.twig', [
+            'meal' => $meal,
+            'searchForm' => $form->createView(),
+        ]);
+
         return $this->render('meal/index.html.twig', [
             'meals' => $mealRepository->findAll(),
         ]);

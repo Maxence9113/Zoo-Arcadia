@@ -9,21 +9,6 @@ class SearchData
     public $q = '';
 
     /**
-     * @var bool
-     */
-    public $promo = false;
-
-    /**
-     * @var null|integer
-     */
-    public $minPrice;
-
-    /**
-     * @var null|integer
-     */
-    public $maxPrice;
-
-    /**
      * @var Race[]
      */
     public $race = [];
@@ -32,4 +17,15 @@ class SearchData
      * @var Habitat[]
      */
     public $habitat = [];
+
+        /**
+     * @var Employee[]
+     */
+    public $employee = [];
+    
+    /**
+     * @var Animal[]
+     */
+    public $animal = [];
+
 }

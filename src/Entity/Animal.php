@@ -31,7 +31,7 @@ class Animal
     /**
      * @var Collection<int, Meal>
      */
-    #[ORM\OneToMany(targetEntity: Meal::class, mappedBy: 'annimal', orphanRemoval: true)]
+    #[ORM\OneToMany(targetEntity: Meal::class, mappedBy: 'animal', orphanRemoval: true)]
     private Collection $meals;
 
     public function __construct()
@@ -111,7 +111,7 @@ class Animal
     {
         if (!$this->meals->contains($meal)) {
             $this->meals->add($meal);
-            $meal->setAnnimal($this);
+            $meal->setAnimal($this);
         }
 
         return $this;
@@ -121,11 +121,17 @@ class Animal
     {
         if ($this->meals->removeElement($meal)) {
             // set the owning side to null (unless already changed)
-            if ($meal->getAnnimal() === $this) {
-                $meal->setAnnimal(null);
+            if ($meal->getAnimal() === $this) {
+                $meal->setAnimal(null);
             }
         }
 
         return $this;
     }
+
+    public function __toString()
+    {
+        return $this->name;
+    }
+
 }
