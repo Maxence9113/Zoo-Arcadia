@@ -11,6 +11,7 @@ use App\Repository\AnimalRepository;
 use Doctrine\ORM\EntityManagerInterface;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\File\Exception\FileException;
+use Symfony\Component\HttpFoundation\JsonResponse;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Attribute\Route;
@@ -135,5 +136,32 @@ class AnimalController extends AbstractController
         }
 
         return $this->redirectToRoute('app_animal_index', [], Response::HTTP_SEE_OTHER);
+    }
+
+    // /**
+    //  * @route("/supprime/image/{id}", name="app_animal_delete_image", methods={"DELETE"})
+    //  */
+    #[Route('/supprime/image/{id}', name: 'app_animal_delete_picture', methods: ['DELETE'])]
+    public function deleteImage(AnimalPicture $picture, Request $resquest, EntityManagerInterface $entityManager){
+        $data = json_decode($resquest->getContent(), true);
+
+        //vérification du token
+        if($this->isCsrfTokenValid('delete' . $picture->getId(), $data['_token'])){
+            //récupération du nom de l'image
+            $name = $picture->getName();
+            //suppression de l'image
+            unlink($this->getParameter('animal_picture_directory') . '/' . $name);
+
+            //suppression de l'entité en bdd
+            // $entityManager = $this->getDoctrine()->getManager();
+            $entityManager->remove($picture);
+            $entityManager->flush();
+
+            // réponse en json
+            return new JsonResponse(['success' => 1]);
+        }else{
+            return new JsonResponse(['error' => 'Token Invalide'], 400);
+        }
+
     }
 }
