@@ -23,14 +23,14 @@ class Animal
     private ?Race $race = null;
 
     /**
-     * @var Collection<int, PictureAnimal>
+     * @var Collection<int, AnimalPicture>
      */
-    #[ORM\OneToMany(targetEntity: PictureAnimal::class, mappedBy: 'animal', orphanRemoval: true)]
-    private Collection $pictureAnimals;
+    #[ORM\OneToMany(targetEntity: AnimalPicture::class, mappedBy: 'animal', orphanRemoval: true, cascade: ['persist'])] 
+    private Collection $animalPictures;
 
     public function __construct()
     {
-        $this->pictureAnimals = new ArrayCollection();
+        $this->animalPictures = new ArrayCollection();
     }
 
     public function getId(): ?int
@@ -63,33 +63,32 @@ class Animal
     }
 
     /**
-     * @return Collection<int, PictureAnimal>
+     * @return Collection<int, AnimalPicture>
      */
-    public function getPictureAnimals(): Collection
+    public function getAnimalPictures(): Collection
     {
-        return $this->pictureAnimals;
+        return $this->animalPictures;
     }
 
-    public function addPictureAnimal(PictureAnimal $pictureAnimal): static
+    public function addAnimalPicture(AnimalPicture $animalPicture): static
     {
-        if (!$this->pictureAnimals->contains($pictureAnimal)) {
-            $this->pictureAnimals->add($pictureAnimal);
-            $pictureAnimal->setAnimal($this);
+        if (!$this->animalPictures->contains($animalPicture)) {
+            $this->animalPictures->add($animalPicture);
+            $animalPicture->setAnimal($this);
         }
 
         return $this;
     }
 
-    public function removePictureAnimal(PictureAnimal $pictureAnimal): static
+    public function removeAnimalPicture(AnimalPicture $animalPicture): static
     {
-        if ($this->pictureAnimals->removeElement($pictureAnimal)) {
+        if ($this->animalPictures->removeElement($animalPicture)) {
             // set the owning side to null (unless already changed)
-            if ($pictureAnimal->getAnimal() === $this) {
-                $pictureAnimal->setAnimal(null);
+            if ($animalPicture->getAnimal() === $this) {
+                $animalPicture->setAnimal(null);
             }
         }
 
         return $this;
     }
-
 }

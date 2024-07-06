@@ -26,22 +26,22 @@ class AnimalType extends AbstractType
                         ->orderBy('r.name', 'ASC');
                 },
             ])
-            // ->add('pictureAnimal', FileType::class, [
-            //     'label' => 'Image (jpeg, webp)',
-            //     'mapped' => false,
-            //     'multiple' => true,
-            //     'required' => false,
-            //     'constraints' => [
-            //         new File([
-            //             // 'maxSize' => '1024k',
-            //             'mimeTypes' => [
-            //                 'image/jpeg',
-            //                 'image/webp',
-            //             ],
-            //             'mimeTypesMessage' => 'Please upload a valid image file',
-            //         ])
-            //     ],
-            // ])
+            ->add('picture', FileType::class, [
+                'label' => 'Image (jpeg, webp)',
+                'mapped' => false,
+                'multiple' => true,
+                'required' => false,
+                // 'constraints' => [
+                //     new File([
+                //         // 'maxSize' => '1024k',
+                //         'mimeTypes' => [
+                //             'image/jpeg',
+                //             'image/webp',
+                //         ],
+                //         'mimeTypesMessage' => 'Please upload a valid image file',
+                //     ])
+                // ],
+            ])
         ;
     }
 
