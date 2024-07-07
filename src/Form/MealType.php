@@ -14,6 +14,7 @@ class MealType extends AbstractType
 {
     public function buildForm(FormBuilderInterface $builder, array $options): void
     {
+        $user = $options['user'];
         $builder
             ->add('quantity')
             ->add('date', null, [
@@ -28,7 +29,9 @@ class MealType extends AbstractType
             ])
             ->add('employee', EntityType::class, [
                 'class' => User::class,
-                'choice_label' => 'name',
+                'choice_label' => 'username',
+                'data' => $user,
+                'disabled' => true,
             ])
         ;
     }
@@ -37,6 +40,7 @@ class MealType extends AbstractType
     {
         $resolver->setDefaults([
             'data_class' => Meal::class,
+            'user' => null
         ]);
     }
 }

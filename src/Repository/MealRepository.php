@@ -27,7 +27,9 @@ class MealRepository extends ServiceEntityRepository
             ->createQueryBuilder('m')
             ->join('m.animal', 'a')
             ->join('m.employee', 'u')
-            ->select('m', 'a', 'u');
+            ->leftJoin('a.race', 'r')
+            ->select('m', 'a', 'u', 'r')
+            ->orderBy('m.date', 'ASC');
 
         if (!empty($search->q)) {
             $query = $query
@@ -46,6 +48,19 @@ class MealRepository extends ServiceEntityRepository
                 ->andWhere('a.name IN (:animal)')
                 ->setParameter('animal', $search->animal);
         }
+
+        if (!empty($search->race)) {
+            $query = $query
+                ->andWhere('a.race IN (:race)')
+                ->setParameter('race', $search->race);
+        }
+
+        if (!empty($search->habitat)) {
+            $query = $query
+                ->andWhere('r.habitat IN (:habitat)')
+                ->setParameter('habitat', $search->habitat);
+        }
+
 
 
         return $query->getQuery()->getResult();

@@ -9,6 +9,7 @@ use App\Form\MealType;
 use App\Repository\MealRepository;
 use Doctrine\ORM\EntityManagerInterface;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
+use Symfony\Bundle\SecurityBundle\Security;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Attribute\Route;
@@ -16,6 +17,13 @@ use Symfony\Component\Routing\Attribute\Route;
 #[Route('/admin/meal')]
 class MealController extends AbstractController
 {
+    private $security;
+
+    public function __construct(Security $security)
+    {
+        $this->security = $security;
+    }
+    
     #[Route('/', name: 'app_meal_index', methods: ['GET'])]
     public function index(MealRepository $mealRepository, Request $request): Response
     {
@@ -34,13 +42,15 @@ class MealController extends AbstractController
     }
 
     #[Route('/new', name: 'app_meal_new', methods: ['GET', 'POST'])]
-    public function new(Request $request, EntityManagerInterface $entityManager): Response
+    public function new(Request $request, EntityManagerInterface $entityManager, Security $security): Response
     {
+        $user = $this->security->getUser();
         $meal = new Meal();
-        $form = $this->createForm(MealType::class, $meal);
+        $form = $this->createForm(MealType::class, $meal, ['user' => $user]);
         $form->handleRequest($request);
 
         if ($form->isSubmitted() && $form->isValid()) {
+            $meal->setEmployee($security->getUser());
             $entityManager->persist($meal);
             $entityManager->flush();
 

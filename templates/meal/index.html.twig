@@ -15,7 +15,9 @@
 				<table class="table">
 					<thead>
 						<tr>
-							<th>Id</th>
+							<th>Habitat</th>
+							<th>Race</th>
+							<th>Animal</th>
 							<th>Quantity</th>
 							<th>Date</th>
 							<th>Time</th>
@@ -25,7 +27,9 @@
 					<tbody>
 						{% for meal in meal %}
 							<tr>
-								<td>{{ meal.id }}</td>
+								<td>{{ meal.animal.race.habitat|habitat_pretty }}</td>
+								<td>{{ meal.animal.race }}</td>
+								<td>{{ meal.animal }}</td>
 								<td>{{ meal.quantity }}</td>
 								<td>{{ meal.date ? meal.date|date('Y-m-d') : '' }}</td>
 								<td>{{ meal.time ? meal.time|date('H:i:s') : '' }}</td>
