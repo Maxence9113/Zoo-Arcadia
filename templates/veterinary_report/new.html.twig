@@ -1,0 +1,11 @@
+{% extends '/admin/index.html.twig' %}
+
+{% block title %}New VeterinaryReport{% endblock %}
+
+{% block content %}
+    <h1>Create new VeterinaryReport</h1>
+
+    {{ include('veterinary_report/_form.html.twig') }}
+
+    <a href="{{ path('app_veterinary_report_index') }}">back to list</a>
+{% endblock %}

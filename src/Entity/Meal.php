@@ -31,6 +31,9 @@ class Meal
     #[ORM\JoinColumn(nullable: false)]
     private ?User $employee = null;
 
+    #[ORM\OneToOne(mappedBy: 'meal', cascade: ['persist', 'remove'])]
+    private ?VeterinaryReport $veterinaryReport = null;
+
     public function getId(): ?int
     {
         return $this->id;
@@ -92,6 +95,28 @@ class Meal
     public function setEmployee(?User $employee): static
     {
         $this->employee = $employee;
+
+        return $this;
+    }
+
+    public function getVeterinaryReport(): ?VeterinaryReport
+    {
+        return $this->veterinaryReport;
+    }
+
+    public function setVeterinaryReport(?VeterinaryReport $veterinaryReport): static
+    {
+        // unset the owning side of the relation if necessary
+        if ($veterinaryReport === null && $this->veterinaryReport !== null) {
+            $this->veterinaryReport->setMeal(null);
+        }
+
+        // set the owning side of the relation if necessary
+        if ($veterinaryReport !== null && $veterinaryReport->getMeal() !== $this) {
+            $veterinaryReport->setMeal($this);
+        }
+
+        $this->veterinaryReport = $veterinaryReport;
 
         return $this;
     }

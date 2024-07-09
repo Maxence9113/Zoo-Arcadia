@@ -54,9 +54,16 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
     #[ORM\Column(length: 255, unique: true)]
     private ?string $username = null;
 
+    /**
+     * @var Collection<int, VeterinaryReport>
+     */
+    #[ORM\OneToMany(targetEntity: VeterinaryReport::class, mappedBy: 'employee', orphanRemoval: true)]
+    private Collection $veterinaryReports;
+
     public function __construct()
     {
         $this->meals = new ArrayCollection();
+        $this->veterinaryReports = new ArrayCollection();
     }
 
     public function getId(): ?string
@@ -196,6 +203,36 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
     public function __toString()
     {
         return $this->username;
+    }
+
+    /**
+     * @return Collection<int, VeterinaryReport>
+     */
+    public function getVeterinaryReports(): Collection
+    {
+        return $this->veterinaryReports;
+    }
+
+    public function addVeterinaryReport(VeterinaryReport $veterinaryReport): static
+    {
+        if (!$this->veterinaryReports->contains($veterinaryReport)) {
+            $this->veterinaryReports->add($veterinaryReport);
+            $veterinaryReport->setEmployee($this);
+        }
+
+        return $this;
+    }
+
+    public function removeVeterinaryReport(VeterinaryReport $veterinaryReport): static
+    {
+        if ($this->veterinaryReports->removeElement($veterinaryReport)) {
+            // set the owning side to null (unless already changed)
+            if ($veterinaryReport->getEmployee() === $this) {
+                $veterinaryReport->setEmployee(null);
+            }
+        }
+
+        return $this;
     }
 
 }

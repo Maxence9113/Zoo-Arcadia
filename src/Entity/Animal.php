@@ -34,10 +34,17 @@ class Animal
     #[ORM\OneToMany(targetEntity: Meal::class, mappedBy: 'animal', orphanRemoval: true)]
     private Collection $meals;
 
+    /**
+     * @var Collection<int, VeterinaryReport>
+     */
+    #[ORM\OneToMany(targetEntity: VeterinaryReport::class, mappedBy: 'animal', orphanRemoval: true)]
+    private Collection $veterinaryReports;
+
     public function __construct()
     {
         $this->animalPictures = new ArrayCollection();
         $this->meals = new ArrayCollection();
+        $this->veterinaryReports = new ArrayCollection();
     }
 
     public function getId(): ?int
@@ -132,6 +139,36 @@ class Animal
     public function __toString()
     {
         return $this->name;
+    }
+
+    /**
+     * @return Collection<int, VeterinaryReport>
+     */
+    public function getVeterinaryReports(): Collection
+    {
+        return $this->veterinaryReports;
+    }
+
+    public function addVeterinaryReport(VeterinaryReport $veterinaryReport): static
+    {
+        if (!$this->veterinaryReports->contains($veterinaryReport)) {
+            $this->veterinaryReports->add($veterinaryReport);
+            $veterinaryReport->setAnimal($this);
+        }
+
+        return $this;
+    }
+
+    public function removeVeterinaryReport(VeterinaryReport $veterinaryReport): static
+    {
+        if ($this->veterinaryReports->removeElement($veterinaryReport)) {
+            // set the owning side to null (unless already changed)
+            if ($veterinaryReport->getAnimal() === $this) {
+                $veterinaryReport->setAnimal(null);
+            }
+        }
+
+        return $this;
     }
 
 }
