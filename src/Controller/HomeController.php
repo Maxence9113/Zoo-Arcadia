@@ -12,7 +12,8 @@ class HomeController extends AbstractController
     #[Route('/', name: 'app_home')]
     public function index(CommentRepository $commentRepository): Response
     {
-        $comments = $commentRepository->findAll();
+        $comments = $commentRepository->findBy([], ['createdAt' => 'DESC']);;
+
         return $this->render('home/index.html.twig', [
             'comments' => $comments
         ]);

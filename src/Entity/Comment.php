@@ -27,11 +27,12 @@ class Comment
     private ?\DateTimeImmutable $createdAt = null;
 
     #[ORM\Column]
-    private ?bool $isApprouved = false;
+    private ?bool $isApprouved = null;
 
     public function __construct()
     {
         $this->createdAt = new \DateTimeImmutable();
+        $this->isApprouved = false;
     }
 
     public function getId(): ?int
@@ -92,7 +93,7 @@ class Comment
         return $this->isApprouved;
     }
 
-    public function setApprouved(bool $isApprouved): static
+    public function setIsApprouved(bool $isApprouved): static
     {
         $this->isApprouved = $isApprouved;
 

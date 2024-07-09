@@ -5,6 +5,7 @@ namespace App\Form;
 use App\Entity\Comment;
 use Symfony\Bundle\SecurityBundle\Security;
 use Symfony\Component\Form\AbstractType;
+use Symfony\Component\Form\Extension\Core\Type\CheckboxType;
 use Symfony\Component\Form\Extension\Core\Type\ChoiceType;
 use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\OptionsResolver\OptionsResolver;
@@ -36,7 +37,12 @@ class CommentType extends AbstractType
 
             ]);
         if ($this->security->isGranted('IS_AUTHENTICATED_REMEMBERED')) {
-            $builder->add('isApprouved');
+            $builder->add('isApprouved', CheckboxType::class, [
+                'label'    => 'Approuver',
+                'required' => false, // La case à cocher n'est pas obligatoire
+                'mapped'   => true,  // Assurez-vous que cette option est à true pour mapper sur l'attribut de l'entité
+                'data'     => false, // Valeur par défaut, vous pouvez l'ajuster selon vos besoins
+            ]);
         }
     }
 
