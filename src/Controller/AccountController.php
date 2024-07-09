@@ -21,12 +21,11 @@ class AccountController extends AbstractController
             return $this->redirectToRoute('app_login');
         }
 
-        $form = $this->createForm(PassewordUserType::class, $user, [
+        $formPwd = $this->createForm(PassewordUserType::class, $user, [
             'passwordHasher' => $passwordHasher
         ]);
-        $form->handleRequest($request);
-        if ($form->isSubmitted() && $form->isValid())
-        {
+        $formPwd->handleRequest($request);
+        if ($formPwd->isSubmitted() && $formPwd->isValid()) {
             $entityManager->flush();
             $this->addFlash(
                 'success',
@@ -36,8 +35,7 @@ class AccountController extends AbstractController
 
         return $this->render('account/index.html.twig', [
             'user' => $user,
-            'modifyPwd' => $form->createView(),
+            'modifyPwd' => $formPwd->createView(),
         ]);
     }
-
 }

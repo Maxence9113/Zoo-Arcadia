@@ -1,50 +1,51 @@
 {% extends '/admin/index.html.twig' %}
 
-{% block title %}Race index{% endblock %}
+{% block title %}Race index
+{% endblock %}
+
+{% block search %}{% endblock %}
 
 {% block content %}
-    <h1>Race index</h1>
+	<h1>Race index</h1>
 
-    <table class="table">
-        <thead>
-            <tr>
-                <th>Id</th>
-                <th>Name</th>
-                <th>Description</th>
-                <th>Habitat</th>
-                <th>Illustration</th>
-                <th>IllustrationAlt</th>
-                <th>actions</th>
-            </tr>
-        </thead>
-        <tbody>
-        {% for race in races %}
-            <tr>
-                <td>{{ race.id }}</td>
-                <td>{{ race.name }}</td>
-                <td>{{ race.description }}</td>
-                <td>{{ race.habitat }}</td>
-                <td>{{ race.illustration }}</td>
-                <td>
-                    <img src="{{ asset('uploads/races/' ~ race.illustration) }}" 
-                        alt="Illustration de race"
-                        style="width: 70px; height: auto;"/>
-                </td>
-                <td>{{ race.illustrationAlt }}</td>
-                <td>
-                    <a href="{{ path('app_race_show', {'id': race.id}) }}">show</a>
-                    <a href="{{ path('app_race_edit', {'id': race.id}) }}">edit</a>
-                    {{ include('race/_delete_form.html.twig') }}
+	<table class="table">
+		<thead>
+			<tr>
+				<th>Id</th>
+				<th>Name</th>
+				<th>Description</th>
+				<th>Habitat</th>
+				<th>Illustration</th>
+				<th>IllustrationAlt</th>
+				<th>actions</th>
+			</tr>
+		</thead>
+		<tbody>
+			{% for race in races %}
+				<tr>
+					<td>{{ race.id }}</td>
+					<td>{{ race.name }}</td>
+					<td>{{ race.description }}</td>
+					<td>{{ race.habitat }}</td>
+					<td>{{ race.illustration }}</td>
+					<td>
+						<img src="{{ asset('uploads/races/' ~ race.illustration) }}" alt="Illustration de race" style="width: 70px; height: auto;"/>
+					</td>
+					<td>{{ race.illustrationAlt }}</td>
+					<td>
+						<a href="{{ path('app_race_show', {'id': race.id}) }}">show</a>
+						<a href="{{ path('app_race_edit', {'id': race.id}) }}">edit</a>
+						{{ include('race/_delete_form.html.twig') }}
 
-                </td>
-            </tr>
-        {% else %}
-            <tr>
-                <td colspan="7">no records found</td>
-            </tr>
-        {% endfor %}
-        </tbody>
-    </table>
+					</td>
+				</tr>
+			{% else %}
+				<tr>
+					<td colspan="7">no records found</td>
+				</tr>
+			{% endfor %}
+		</tbody>
+	</table>
 
-    <a href="{{ path('app_race_new') }}">Create new</a>
+	<a href="{{ path('app_race_new') }}">Create new</a>
 {% endblock %}

@@ -50,13 +50,13 @@ class AnimalController extends AbstractController
                 $originalFilename = pathinfo($image->getClientOriginalName(), PATHINFO_FILENAME);
                 // this is needed to safely include the file name as part of the URL
                 $safeFilename = $slugger->slug($originalFilename);
-                $newFilename = $safeFilename.'-'.uniqid().'.'.$image->guessExtension();
+                $newFilename = $safeFilename . '-' . uniqid() . '.' . $image->guessExtension();
 
                 try {
                     $image->move(
-                        $this->getParameter('animal_picture_directory'), 
-                        $newFilename);
-                        
+                        $this->getParameter('animal_picture_directory'),
+                        $newFilename
+                    );
                 } catch (FileException $e) {
                     // ... handle exception if something happens during file upload
                 }
@@ -67,6 +67,11 @@ class AnimalController extends AbstractController
             }
             $entityManager->persist($animal);
             $entityManager->flush();
+            $this->addFlash(
+                'success',
+                'Nouvel Animal enregistré !'
+            );
+
 
             return $this->redirectToRoute('app_animal_index', [], Response::HTTP_SEE_OTHER);
         }
@@ -92,30 +97,30 @@ class AnimalController extends AbstractController
         $form->handleRequest($request);
 
         if ($form->isSubmitted() && $form->isValid()) {
-                        //récuperation des images
-                        $images = $form->get('picture')->getData();
+            //récuperation des images
+            $images = $form->get('picture')->getData();
 
-                        //on boucle sur les images
-                        foreach ($images as $image) {
-                            //on génère un nouveau nom de fichier
-                            $originalFilename = pathinfo($image->getClientOriginalName(), PATHINFO_FILENAME);
-                            // this is needed to safely include the file name as part of the URL
-                            $safeFilename = $slugger->slug($originalFilename);
-                            $newFilename = $safeFilename.'-'.uniqid().'.'.$image->guessExtension();
-            
-                            try {
-                                $image->move(
-                                    $this->getParameter('animal_picture_directory'), 
-                                    $newFilename);
-                                    
-                            } catch (FileException $e) {
-                                // ... handle exception if something happens during file upload
-                            }
-                            //on stocke le nom de l'image dans la base de données
-                            $img = new AnimalPicture();
-                            $img->setName($newFilename);
-                            $animal->addAnimalPicture($img);
-                        }
+            //on boucle sur les images
+            foreach ($images as $image) {
+                //on génère un nouveau nom de fichier
+                $originalFilename = pathinfo($image->getClientOriginalName(), PATHINFO_FILENAME);
+                // this is needed to safely include the file name as part of the URL
+                $safeFilename = $slugger->slug($originalFilename);
+                $newFilename = $safeFilename . '-' . uniqid() . '.' . $image->guessExtension();
+
+                try {
+                    $image->move(
+                        $this->getParameter('animal_picture_directory'),
+                        $newFilename
+                    );
+                } catch (FileException $e) {
+                    // ... handle exception if something happens during file upload
+                }
+                //on stocke le nom de l'image dans la base de données
+                $img = new AnimalPicture();
+                $img->setName($newFilename);
+                $animal->addAnimalPicture($img);
+            }
             $entityManager->flush();
 
             return $this->redirectToRoute('app_animal_index', [], Response::HTTP_SEE_OTHER);
@@ -142,11 +147,12 @@ class AnimalController extends AbstractController
     //  * @route("/supprime/image/{id}", name="app_animal_delete_image", methods={"DELETE"})
     //  */
     #[Route('/supprime/image/{id}', name: 'app_animal_delete_picture', methods: ['DELETE'])]
-    public function deleteImage(AnimalPicture $picture, Request $resquest, EntityManagerInterface $entityManager){
+    public function deleteImage(AnimalPicture $picture, Request $resquest, EntityManagerInterface $entityManager)
+    {
         $data = json_decode($resquest->getContent(), true);
 
         //vérification du token
-        if($this->isCsrfTokenValid('delete' . $picture->getId(), $data['_token'])){
+        if ($this->isCsrfTokenValid('delete' . $picture->getId(), $data['_token'])) {
             //récupération du nom de l'image
             $name = $picture->getName();
             //suppression de l'image
@@ -159,9 +165,8 @@ class AnimalController extends AbstractController
 
             // réponse en json
             return new JsonResponse(['success' => 1]);
-        }else{
+        } else {
             return new JsonResponse(['error' => 'Token Invalide'], 400);
         }
-
     }
 }

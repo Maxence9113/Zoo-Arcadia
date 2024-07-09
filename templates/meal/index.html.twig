@@ -3,52 +3,43 @@
 {% block title %}Meal index
 {% endblock %}
 
+{% block search %}
+	{% include 'meal/_search_form.html.twig' with {form: searchForm} only %}
+{% endblock %}
+
 {% block content %}
 	<h1>Meal index</h1>
-
-	<div class="container">
-		<div class="row">
-			<div class="col-md-3">
-				{% include 'meal/_search_form.html.twig' with {form: searchForm} only %}
-			</div>
-			<div class="col-md-9">
-				<table class="table">
-					<thead>
-						<tr>
-							<th>Habitat</th>
-							<th>Race</th>
-							<th>Animal</th>
-							<th>Quantity</th>
-							<th>Date</th>
-							<th>Time</th>
-							<th>actions</th>
-						</tr>
-					</thead>
-					<tbody>
-						{% for meal in meal %}
-							<tr>
-								<td>{{ meal.animal.race.habitat|habitat_pretty }}</td>
-								<td>{{ meal.animal.race }}</td>
-								<td>{{ meal.animal }}</td>
-								<td>{{ meal.quantity }}</td>
-								<td>{{ meal.date ? meal.date|date('Y-m-d') : '' }}</td>
-								<td>{{ meal.time ? meal.time|date('H:i:s') : '' }}</td>
-								<td>
-									<a href="{{ path('app_meal_show', {'id': meal.id}) }}">show</a>
-									<a href="{{ path('app_meal_edit', {'id': meal.id}) }}">edit</a>
-								</td>
-							</tr>
-						{% else %}
-							<tr>
-								<td colspan="5">no records found</td>
-							</tr>
-						{% endfor %}
-					</tbody>
-				</table>
-			</div>
-		</div>
-	</div>
-
-
-	<a href="{{ path('app_meal_new') }}">Create new</a>
-{% endblock %}
+	<table class="table">
+		<thead>
+			<tr>
+				<th>Habitat</th>
+				<th>Race</th>
+				<th>Animal</th>
+				<th>Quantity</th>
+				<th>Date</th>
+				<th>Time</th>
+				<th>actions</th>
+			</tr>
+		</thead>
+		<tbody>
+			{% for meal in meal %}
+				<tr>
+					<td>{{ meal.animal.race.habitat|habitat_pretty }}</td>
+					<td>{{ meal.animal.race }}</td>
+					<td>{{ meal.animal }}</td>
+					<td>{{ meal.quantity }}</td>
+					<td>{{ meal.date ? meal.date|date('Y-m-d') : '' }}</td>
+					<td>{{ meal.time ? meal.time|date('H:i:s') : '' }}</td>
+					<td>
+						<a href="{{ path('app_meal_show', {'id': meal.id}) }}">show</a>
+						<a href="{{ path('app_meal_edit', {'id': meal.id}) }}">edit</a>
+					</td>
+				</tr>
+			{% else %}
+				<tr>
+					<td colspan="5">no records found</td>
+				</tr>
+			{% endfor %}
+		</tbody>
+	</table>
+</div></div></div><a href="{{ path('app_meal_new') }}">Create new</a>{% endblock %}

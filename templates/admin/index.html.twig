@@ -7,12 +7,15 @@
 		{% include "_partials/_admin_sidebar.html.twig" %}
 	{% endblock %}
 
-    {% block search %}
-    
-    {% endblock %}
+	<div class="container">
+		<div class="row">
+			<div class="col-md-3">
+				{% block search %}{% endblock %}
+			</div>
 
-    {% block content %}
-        <h2>Content</h2>
-    {% endblock %}
-
+			<div class="col-md-9">
+				{% block content %}{% endblock %}
+			</div>
+		</div>
+	</div>
 {% endblock %}
