@@ -6,6 +6,11 @@
 				<h4>Commentaires</h4>
 			</div>
 
+			{{ form_start(comment_form) }}
+			{{ form_widget(comment_form) }}
+			<button type="submit">Envoyer</button>
+			{{ form_end(comment_form) }}
+
 			{% for comment in comments %}
 				{% if comment.isApprouved %}
 					<div class="card p-3">

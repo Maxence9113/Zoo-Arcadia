@@ -2,6 +2,7 @@
 
 namespace App\Repository;
 
+use App\Data\SearchData;
 use App\Entity\Comment;
 use Doctrine\Bundle\DoctrineBundle\Repository\ServiceEntityRepository;
 use Doctrine\Persistence\ManagerRegistry;
@@ -16,28 +17,34 @@ class CommentRepository extends ServiceEntityRepository
         parent::__construct($registry, Comment::class);
     }
 
-//    /**
-//     * @return Comment[] Returns an array of Comment objects
-//     */
-//    public function findByExampleField($value): array
-//    {
-//        return $this->createQueryBuilder('c')
-//            ->andWhere('c.exampleField = :val')
-//            ->setParameter('val', $value)
-//            ->orderBy('c.id', 'ASC')
-//            ->setMaxResults(10)
-//            ->getQuery()
-//            ->getResult()
-//        ;
-//    }
+    public function findSearch(SearchData $search, array $orderBy = ['createdAt' => 'DESC']): array
+    {
+        $query = $this
+            ->createQueryBuilder('c')
+            ->select('c');
 
-//    public function findOneBySomeField($value): ?Comment
-//    {
-//        return $this->createQueryBuilder('c')
-//            ->andWhere('c.exampleField = :val')
-//            ->setParameter('val', $value)
-//            ->getQuery()
-//            ->getOneOrNullResult()
-//        ;
-//    }
+        if (!empty($search->q)) {
+            $query = $query
+                ->andWhere('c.username LIKE :q OR c.createdAt LIKE :q OR c.comment LIKE :q')
+                ->setParameter('q', "%{$search->q}%");
+        }
+
+        if (!empty($search->isApprouved)) {
+            $query = $query
+                ->andWhere('c.isApprouved IN (:isApprouved)')
+                ->setParameter('isApprouved', $search->isApprouved);
+        }
+
+        if (!empty($search->note)) {
+            $query = $query
+                ->andWhere('c.note IN (:note)')
+                ->setParameter('note', $search->note);
+        }
+
+        foreach ($orderBy as $field => $direction) {
+            $query->addOrderBy('c.' . $field, $direction);
+        }
+
+        return $query->getQuery()->getResult();
+    }
 }

@@ -1,6 +1,7 @@
 <?php
 
 namespace App\Data;
+
 class SearchData
 {
     /**
@@ -12,20 +13,29 @@ class SearchData
      * @var Race[]
      */
     public $race = [];
-    
+
     /**
      * @var Habitat[]
      */
     public $habitat = [];
 
-        /**
+    /**
      * @var Employee[]
      */
     public $employee = [];
-    
+
     /**
      * @var Animal[]
      */
     public $animal = [];
 
+    /**
+     * @var bool
+     */
+    public $isApprouved;
+
+    /**
+     * @var int
+     */
+    public $note;
 }

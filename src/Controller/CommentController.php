@@ -2,7 +2,9 @@
 
 namespace App\Controller;
 
+use App\Data\SearchData;
 use App\Entity\Comment;
+use App\Form\CommentSearchType;
 use App\Form\CommentType;
 use App\Repository\CommentRepository;
 use Doctrine\ORM\EntityManagerInterface;
@@ -15,12 +17,17 @@ use Symfony\Component\Routing\Attribute\Route;
 class CommentController extends AbstractController
 {
     #[Route('/', name: 'app_comment_index', methods: ['GET'])]
-    public function index(CommentRepository $commentRepository): Response
+    public function index(CommentRepository $commentRepository, Request $request): Response
     {
-        $comments = $commentRepository->findBy([], ['createdAt' => 'ASC']);;
+        $data = new SearchData();
+        $form = $this->createForm(CommentSearchType::class, $data);
+        $form->handleRequest($request);
+        $comments = $commentRepository->findBy([], ['createdAt' => 'DESC']);
+        $comments = $commentRepository->findSearch($data, ['createdAt' => 'DESC']);
 
         return $this->render('comment/index.html.twig',  [
             'comments' => $comments,
+            'searchForm' => $form->createView(),
         ]);
     }
 

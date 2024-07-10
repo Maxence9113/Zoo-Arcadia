@@ -3,7 +3,9 @@
 {% block title %}Comment index
 {% endblock %}
 
-{% block search %}{% endblock %}
+{% block search %}
+	{% include 'comment/_search_form.html.twig' with {form: searchForm} only %}
+{% endblock %}
 
 {% block content %}
 	<h1>Comment index</h1>

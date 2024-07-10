@@ -17,7 +17,7 @@ class MealRepository extends ServiceEntityRepository
         parent::__construct($registry, Meal::class);
     }
 
-        /**
+    /**
      * Récupère les animaux en base de données
      * @return Meal[]
      */
@@ -33,7 +33,7 @@ class MealRepository extends ServiceEntityRepository
 
         if (!empty($search->q)) {
             $query = $query
-                ->andWhere('r.name LIKE :q OR a.name LIKE :q')
+                ->andWhere('u.username LIKE :q OR a.name LIKE :q OR m.date LIKE :q OR r.name LIKE :q OR r.habitat LIKE :q')
                 ->setParameter('q', "%{$search->q}%");
         }
 
@@ -67,28 +67,28 @@ class MealRepository extends ServiceEntityRepository
     }
 
 
-//    /**
-//     * @return Meal[] Returns an array of Meal objects
-//     */
-//    public function findByExampleField($value): array
-//    {
-//        return $this->createQueryBuilder('m')
-//            ->andWhere('m.exampleField = :val')
-//            ->setParameter('val', $value)
-//            ->orderBy('m.id', 'ASC')
-//            ->setMaxResults(10)
-//            ->getQuery()
-//            ->getResult()
-//        ;
-//    }
+    //    /**
+    //     * @return Meal[] Returns an array of Meal objects
+    //     */
+    //    public function findByExampleField($value): array
+    //    {
+    //        return $this->createQueryBuilder('m')
+    //            ->andWhere('m.exampleField = :val')
+    //            ->setParameter('val', $value)
+    //            ->orderBy('m.id', 'ASC')
+    //            ->setMaxResults(10)
+    //            ->getQuery()
+    //            ->getResult()
+    //        ;
+    //    }
 
-//    public function findOneBySomeField($value): ?Meal
-//    {
-//        return $this->createQueryBuilder('m')
-//            ->andWhere('m.exampleField = :val')
-//            ->setParameter('val', $value)
-//            ->getQuery()
-//            ->getOneOrNullResult()
-//        ;
-//    }
+    //    public function findOneBySomeField($value): ?Meal
+    //    {
+    //        return $this->createQueryBuilder('m')
+    //            ->andWhere('m.exampleField = :val')
+    //            ->setParameter('val', $value)
+    //            ->getQuery()
+    //            ->getOneOrNullResult()
+    //        ;
+    //    }
 }
