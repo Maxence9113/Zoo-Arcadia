@@ -3,9 +3,10 @@
 namespace App\DataFixtures;
 
 use Doctrine\Bundle\FixturesBundle\Fixture;
+use Doctrine\Common\DataFixtures\DependentFixtureInterface;
 use Doctrine\Persistence\ObjectManager;
 
-class Animal extends Fixture
+class Animal extends Fixture implements DependentFixtureInterface
 {
     public function load(ObjectManager $manager): void
     {
@@ -14,12 +15,20 @@ class Animal extends Fixture
 
         for ($i = 0; $i < 30; $i++) {
             $animal = new \App\Entity\Animal();
-            $randAnimal = $zooAnimals[array_rand($zooAnimals)];
-            $animal->setRace($randAnimal);
+            $animal->setName($faker->firstName);
+
+            $animal->setRace($this->getReference('test' . rand(0, 29)));
+
             $manager->persist($animal);
         }
 
 
         $manager->flush();
+    }
+    public function getDependencies()
+    {
+        return [
+            Race::class,
+        ];
     }
 }
