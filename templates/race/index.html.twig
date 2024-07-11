@@ -27,9 +27,13 @@
 					<td>{{ race.name }}</td>
 					<td>{{ race.description }}</td>
 					<td>{{ race.habitat }}</td>
-					<td>{{ race.illustration }}</td>
+					{# <td>{{ race.illustration }}</td> #}
 					<td>
-						<img src="{{ asset('uploads/races/' ~ race.illustration) }}" alt="Illustration de race" style="width: 70px; height: auto;"/>
+						{% if race.illustration starts with 'http' %}
+							<img src="{{ race.illustration }}" alt="Illustration de race" style="width: 70px; height: auto;"/>
+						{% else %}
+							<img src="{{ asset('uploads/races/' ~ race.illustration) }}" alt="Illustration de race" style="width: 70px; height: auto;"/>
+						{% endif %}
 					</td>
 					<td>{{ race.illustrationAlt }}</td>
 					<td>
