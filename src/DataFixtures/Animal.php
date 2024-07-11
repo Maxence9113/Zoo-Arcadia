@@ -10,16 +10,19 @@ class Animal extends Fixture implements DependentFixtureInterface
 {
     public function load(ObjectManager $manager): void
     {
-        // Creer 30 animaux
+        // Creer entre 3 et 5 animaux par race
         $faker = \Faker\Factory::create('fr_FR');
+        $races = $manager->getRepository(\App\Entity\Race::class)->findAll();
 
-        for ($i = 0; $i < 30; $i++) {
-            $animal = new \App\Entity\Animal();
-            $animal->setName($faker->firstName);
+        foreach ($races as $race) {
+            $nombreRace = rand(3, 8);
 
-            $animal->setRace($this->getReference('test' . rand(0, 29)));
-
-            $manager->persist($animal);
+            for ($i = 0; $i < $nombreRace; $i++) {
+                $animal = new \App\Entity\Animal();
+                $animal->setName($faker->firstName);
+                $animal->setRace($race);
+                $manager->persist($animal);
+            }
         }
 
 

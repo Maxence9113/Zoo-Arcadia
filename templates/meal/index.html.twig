@@ -12,6 +12,7 @@
 	<table class="table">
 		<thead>
 			<tr>
+				<th>Employé</th>
 				<th>Habitat</th>
 				<th>Race</th>
 				<th>Animal</th>
@@ -23,6 +24,7 @@
 		<tbody>
 			{% for meal in meal %}
 				<tr>
+					<td>{{ meal.employee.username }}</td>
 					<td>{{ meal.animal.race.habitat|habitat_pretty }}</td>
 					<td>{{ meal.animal.race }}</td>
 					<td>{{ meal.animal }}</td>

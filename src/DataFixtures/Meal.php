@@ -15,7 +15,7 @@ class Meal extends Fixture implements DependentFixtureInterface
         $animals = $manager->getRepository(\App\Entity\Animal::class)->findAll();
 
         foreach ($animals as $animal) {
-            $nombreMeal = rand(3, 8);
+            $nombreMeal = 5;
 
             for ($i = 0; $i < $nombreMeal; $i++) {
                 $meal = new \App\Entity\Meal();
@@ -24,6 +24,7 @@ class Meal extends Fixture implements DependentFixtureInterface
                 $meal->setAnimal($animal);
                 $meal->setCreatedAt(DateTimeImmutable::createFromMutable($faker->dateTimeBetween('-6 months')));
                 $manager->persist($meal);
+                $this->addReference($animal->getId() . 'meal' . $i, $meal);
             }
         }
 
@@ -34,6 +35,7 @@ class Meal extends Fixture implements DependentFixtureInterface
     {
         return [
             Animal::class,
+            User::class,
         ];
     }
 }
