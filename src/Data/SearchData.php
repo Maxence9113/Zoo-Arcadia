@@ -38,4 +38,8 @@ class SearchData
      * @var int
      */
     public $note;
+    /**
+     * @var string
+     */
+    public $profil;
 }
