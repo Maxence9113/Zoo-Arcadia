@@ -17,7 +17,6 @@
 				<th>Animal</th>
 				<th>Quantity</th>
 				<th>Date</th>
-				<th>Time</th>
 				<th>actions</th>
 			</tr>
 		</thead>
@@ -28,8 +27,7 @@
 					<td>{{ meal.animal.race }}</td>
 					<td>{{ meal.animal }}</td>
 					<td>{{ meal.quantity }}</td>
-					<td>{{ meal.date ? meal.date|date('Y-m-d') : '' }}</td>
-					<td>{{ meal.time ? meal.time|date('H:i:s') : '' }}</td>
+					<td>{{ meal.createdAt ? meal.createdAt|date('Y-m-d-H:i:s') : '' }}</td>
 					<td>
 						<a href="{{ path('app_meal_show', {'id': meal.id}) }}">show</a>
 						<a href="{{ path('app_meal_edit', {'id': meal.id}) }}">edit</a>

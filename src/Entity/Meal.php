@@ -17,11 +17,8 @@ class Meal
     #[ORM\Column]
     private ?int $quantity = null;
 
-    #[ORM\Column(type: Types::DATE_IMMUTABLE)]
-    private ?\DateTimeImmutable $date = null;
-
-    #[ORM\Column(type: Types::TIME_IMMUTABLE)]
-    private ?\DateTimeImmutable $time = null;
+    #[ORM\Column(type: Types::DATETIME_IMMUTABLE)]
+    private ?\DateTimeImmutable $createdAt = null;
 
     #[ORM\ManyToOne(inversedBy: 'meals')]
     #[ORM\JoinColumn(nullable: false)]
@@ -51,26 +48,14 @@ class Meal
         return $this;
     }
 
-    public function getDate(): ?\DateTimeImmutable
+    public function getCreatedAt(): ?\DateTimeImmutable
     {
-        return $this->date;
+        return $this->createdAt;
     }
 
-    public function setDate(\DateTimeImmutable $date): static
+    public function setCreatedAt(\DateTimeImmutable $createdAt): static
     {
-        $this->date = $date;
-
-        return $this;
-    }
-
-    public function getTime(): ?\DateTimeImmutable
-    {
-        return $this->time;
-    }
-
-    public function setTime(\DateTimeImmutable $time): static
-    {
-        $this->time = $time;
+        $this->createdAt = $createdAt;
 
         return $this;
     }

@@ -7,6 +7,7 @@ use App\Entity\Meal;
 use App\Entity\User;
 use Symfony\Bridge\Doctrine\Form\Type\EntityType;
 use Symfony\Component\Form\AbstractType;
+use Symfony\Component\Form\Extension\Core\Type\DateType;
 use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\OptionsResolver\OptionsResolver;
 
@@ -17,12 +18,7 @@ class MealType extends AbstractType
         $user = $options['user'];
         $builder
             ->add('quantity')
-            ->add('date', null, [
-                'widget' => 'single_text',
-            ])
-            ->add('time', null, [
-                'widget' => 'single_text',
-            ])
+            ->add('createdAt', DateType::class, [])
             ->add('animal', EntityType::class, [
                 'class' => Animal::class,
                 'choice_label' => 'name',
@@ -32,8 +28,7 @@ class MealType extends AbstractType
                 'choice_label' => 'username',
                 'data' => $user,
                 'disabled' => true,
-            ])
-        ;
+            ]);
     }
 
     public function configureOptions(OptionsResolver $resolver): void

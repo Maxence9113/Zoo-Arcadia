@@ -24,6 +24,7 @@ class User extends Fixture
             $user->setProfil($ramdomProfil);
             $user->setUsername($faker->userName);
             $manager->persist($user);
+            $this->addReference('employee' . $i, $user);
         }
 
         $manager->flush();

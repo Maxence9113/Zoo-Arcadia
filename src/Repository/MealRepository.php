@@ -29,7 +29,7 @@ class MealRepository extends ServiceEntityRepository
             ->join('m.employee', 'u')
             ->leftJoin('a.race', 'r')
             ->select('m', 'a', 'u', 'r')
-            ->orderBy('m.date', 'ASC');
+            ->orderBy('m.createdAt', 'ASC');
 
         if (!empty($search->q)) {
             $query = $query
